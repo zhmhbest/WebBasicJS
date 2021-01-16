@@ -22,10 +22,9 @@ module.exports = function (argv) {
         output: {
             path: FileSupport.subdir(dist),
             filename: isProd ? "[name].js" : "[name].dev.js",
-            libraryTarget: "commonjs",
+            libraryTarget: isProd ? "commonjs" : "var",
+            library: packageInfo.name,
             globalObject: "this",
-            // libraryTarget: "var",
-            // library: packageInfo.name,
         }
     });
 
