@@ -8,10 +8,8 @@ export {
     hash
 }
 
-// const WebBasicJS = {
-//     // form: require("./lib/form.ts"),
-//     // ajax: require("./lib/ajax.ts"),
-//     // cookie: require("./lib/cookie"),
-//     // file: require("./lib/file"),
-//     // date: require("./lib/date"),
-// };
+// form: require("./lib/form.ts"),
+// ajax: require("./lib/ajax.ts"),
+// cookie: require("./lib/cookie"),
+// file: require("./lib/file"),
+// date: require("./lib/date"),
