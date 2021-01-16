@@ -16,7 +16,8 @@ npm -D i typescript ts-loader
 `package.json`
 
 ```json
-  "main": "src/index.ts",
+  "main": "dist/index.min.js",
+  "types": "dist/index.ts",
   "scripts": {
     "build.dev": "webpack  --config webpack/index.js --mode=development --env mode=development",
     "build.prod": "webpack --config webpack/index.js --mode=production  --env mode=production"

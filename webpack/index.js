@@ -3,6 +3,7 @@ const FileSupport = require("./lib/FileSupport");
 
 module.exports = function (argv) {
     const packageInfo = require("../package.json");
+    const dist = `dist/${packageInfo.version}`;
     const mode = argv["mode"];
     const isProd = "production" === mode;
     const isDev = !isProd;
@@ -11,7 +12,6 @@ module.exports = function (argv) {
     /**
      * 当前工作目录为package.json所在目录
      */
-
     // 【Base】
     config.extend({
         devtool: "source-map",
@@ -20,10 +20,12 @@ module.exports = function (argv) {
             index: "./src/index.ts"
         },
         output: {
-            path: FileSupport.subdir("dist"),
-            filename: `${packageInfo.name}-${packageInfo.version}.${isProd ? "min" : "dev"}.js`,
-            library: packageInfo.name,
-            libraryTarget: "var"
+            path: FileSupport.subdir(dist),
+            filename: isProd ? "[name].js" : "[name].dev.js",
+            libraryTarget: "commonjs",
+            globalObject: "this",
+            // libraryTarget: "var",
+            // library: packageInfo.name,
         }
     });
 
@@ -43,7 +45,8 @@ module.exports = function (argv) {
                 ["@babel/plugin-proposal-class-properties", { loose: true }],
                 // ["@babel/plugin-transform-runtime", {corejs: false}]
             ]
-        }
+        },
+        true
     );
 
     // 【tsconfig】
@@ -67,8 +70,14 @@ module.exports = function (argv) {
                 target: "ES6",
                 module: "None",
                 moduleResolution: "node",
+
+                declaration: true,
+                declarationDir: dist,
+                // types,
+                // typeRoots,
             }
-        }
+        },
+        true
     );
 
     // 【*.js】

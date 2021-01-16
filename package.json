@@ -2,7 +2,8 @@
   "name": "WebBasicJS",
   "version": "1.0.0",
   "description": "基于Webpack打包的前端基础库",
-  "main": "src/index.ts",
+  "main": "dist/1.0.0/index.js",
+  "types": "dist/1.0.0/index.d.ts",
   "scripts": {
     "build.dev": "webpack  --config webpack/index.js --mode=development --env mode=development",
     "build.prod": "webpack --config webpack/index.js --mode=production  --env mode=production"
