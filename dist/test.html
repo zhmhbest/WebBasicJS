@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <script src="./WebBasicJS-1.0.0.dev.js"></script>
+    </head>
+    <body>
+        <script>
+            WebBasicJS.hash.setData({
+                x: "Hello",
+                y: [1, 2, 3],
+                z: {
+                    aa: "Apple",
+                    bb: "Body"
+                }
+            });
+            WebBasicJS.hash.pushOnHashChange(function(ev) {
+                console.log(ev);
+                console.log(WebBasicJS.hash.getData());
+            });
+        </script>
+    </body>
+</html>

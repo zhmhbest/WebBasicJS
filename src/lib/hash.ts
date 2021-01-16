@@ -1,21 +1,21 @@
 /**
  * Object->String
- * @param obj: DataHolder
- * @param sep: Separator
- * @param eqs: Equal sign
+ * @param obj DataHolder
+ * @param sep Separator
+ * @param eqs Equal-sign
  */
-function toGetString(obj: object, sep?: string, eqs?: string): string {
+export const stringify =
+(obj: object, sep?: string, eqs?: string): string => {
     sep = sep || '&';
     eqs = eqs || '=';
     const buffer: string[] = [];
     for (let key of Object.keys(obj)) {
         // @ts-ignore
         let val: any = obj[key];
-        buffer.push([key, encodeURIComponent(val)].join(eqs));
+        buffer.push([key, encodeURIComponent(JSON.stringify(val))].join(eqs));
     }
     return buffer.join(sep);
-}
-
+};
 
 /**
  * String->Dict
@@ -23,7 +23,8 @@ function toGetString(obj: object, sep?: string, eqs?: string): string {
  * @param sep
  * @param eqs
  */
-function parseGetString(str: string, sep?: string, eqs?: string): object {
+export const parse =
+(str: string, sep?: string, eqs?: string): object => {
     let buffer = Object();
     str = str.trim();
     if (0 === str.length) return buffer;
@@ -31,41 +32,46 @@ function parseGetString(str: string, sep?: string, eqs?: string): object {
     eqs = eqs || '=';
     for (let item of str.split(sep)) {
         let kv: string[] = item.split(eqs);
-        buffer[kv[0]] = decodeURIComponent(kv[1]);
+        buffer[kv[0]] = JSON.parse(decodeURIComponent(kv[1]));
     }
     return buffer;
-}
+};
 
+export interface onHashChangeCallback {
+    (this: WindowEventHandlers, ev: Event) : any
+};
 
 /**
  * Catch HashChange
  */
-function pushOnHashChange(
-    fn: (
-        hash:string,
-        handlers:WindowEventHandlers,
-        event:HashChangeEvent
-    ) => any
-) {
-    // @ts-ignore
-    const preHCE: (ev: HashChangeEvent) => any = window.onhashchange;
-    if (undefined === preHCE || null === preHCE) {
-        // 直接添加
-        window.onhashchange = function (ev: HashChangeEvent) {
-            fn(window.location.hash.substr(1), this, ev);
-        }
+export const pushOnHashChange =
+(fn: onHashChangeCallback): void => {
+    const pr = window.onhashchange as onHashChangeCallback;
+    if (null === pr || undefined === pr) {
+        window.onhashchange = fn;
     } else {
         // 方法链
-        window.onhashchange = function (ev: HashChangeEvent) {
-            preHCE.call(this, ev);
-            fn(window.location.hash.substr(1), this, ev);
-        };
+        window.onhashchange = function (this: WindowEventHandlers, ev: Event): any {
+            pr.call(this, ev);
+            fn.call(this, ev);
+        }
     }
-}
+};
 
+/**
+ * 读取Hash值中?后的数据
+ */
+export const getData = (): object | null => {
+    const HASH = window.location.hash;
+    const pos = HASH.indexOf('?') + 1;
+    if (0 === pos) {
+        return null;
+    } else {
+        return parse(HASH.substr(pos, HASH.length - pos));
+    }
+};
 
-export {
-    toGetString,
-    parseGetString,
-    pushOnHashChange,
+export const setData =
+(data: object): void => {
+    window.location.hash = `?${stringify(data)}`;
 };

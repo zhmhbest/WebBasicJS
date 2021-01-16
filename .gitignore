@@ -5,4 +5,6 @@
 /package-lock.json
 /.babelrc
 /tsconfig.json
+/dist/*.dev.js
+/dist/*.dev.js.map
 .trash/

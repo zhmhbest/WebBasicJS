@@ -17,7 +17,7 @@ module.exports = function (argv) {
         devtool: "source-map",
         mode: mode,
         entry: {
-            index: "./src/index.js"
+            index: "./src/index.ts"
         },
         output: {
             path: FileSupport.subdir("dist"),
@@ -65,7 +65,8 @@ module.exports = function (argv) {
                 preserveConstEnums: true,       // 保留 const enums
                 sourceMap: true,
                 target: "ES6",
-                module: "ES6",
+                module: "None",
+                moduleResolution: "node",
             }
         }
     );
