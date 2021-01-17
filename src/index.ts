@@ -8,6 +8,7 @@ import * as ajax from "./lib/ajax";
 import * as date from "./lib/date";
 import * as cookie from "./lib/cookie";
 import * as form from "./lib/form";
+import * as file from "./lib/file";
 
 export {
     screen,
@@ -17,7 +18,6 @@ export {
     ajax,
     date,
     cookie,
-    form
+    form,
+    file
 }
-
-// file: require("./lib/file"),

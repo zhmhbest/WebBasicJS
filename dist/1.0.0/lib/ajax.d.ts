@@ -1,5 +1,5 @@
-export declare const get: (url: string, type?: "" | "arraybuffer" | "blob" | "document" | "json" | "text" | undefined, data?: object | undefined, headers?: object | undefined) => Promise<any>;
-export declare const post: (url: string, type?: "" | "arraybuffer" | "blob" | "document" | "json" | "text" | undefined, data?: object | FormData | undefined, headers?: object | undefined) => Promise<any>;
+export declare const get: (url: string, type?: "" | "text" | "arraybuffer" | "blob" | "document" | "json" | undefined, data?: object | undefined, headers?: object | undefined) => Promise<any>;
+export declare const post: (url: string, type?: "" | "text" | "arraybuffer" | "blob" | "document" | "json" | undefined, data?: object | FormData | undefined, headers?: object | undefined) => Promise<any>;
 export declare class Requester {
     get prefix(): string;
     set prefix(value: string);

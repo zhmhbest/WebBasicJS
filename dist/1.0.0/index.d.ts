@@ -6,4 +6,5 @@ import * as ajax from "./lib/ajax";
 import * as date from "./lib/date";
 import * as cookie from "./lib/cookie";
 import * as form from "./lib/form";
-export { screen, hash, str, arr, ajax, date, cookie, form };
+import * as file from "./lib/file";
+export { screen, hash, str, arr, ajax, date, cookie, form, file };

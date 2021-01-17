@@ -116,5 +116,34 @@
                 });
             }
         </script>
+
+        <button onclick="loadFiles()">加载File</button>
+        <button onclick="downloadFile()">下载文件</button>
+        <script>
+            function loadFiles() {
+                const f = new webbasicjs.file.FileLoader();
+                f.bindLoad(fs => {
+                    const f = fs[0];
+                    webbasicjs.file.readFileText(f, text => {
+                        console.log(text);
+                    });
+                    // webbasicjs.file.readFileBase64(f, b64 => {
+                    //     console.log(b64);
+                    // });
+                    webbasicjs.file.readFileBinary(f, bin => {
+                        console.log(bin);
+                    })
+                });
+            }
+            function downloadFile() {
+                webbasicjs.file.downloadText({
+                    A: "王哈哈",
+                    B: [1, 2, 3],
+                    C: {
+                        People: "Republic"
+                    }
+                }, "abc.json");
+            }
+        </script>
     </body>
 </html>
