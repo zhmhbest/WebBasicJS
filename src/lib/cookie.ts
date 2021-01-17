@@ -51,6 +51,8 @@ export const set = (
         buffer.push(path);
     }
     document.cookie = buffer.join('');
+    // 重置缓存
+    cacheCookies = undefined;
 }
 
 /**
@@ -72,6 +74,8 @@ export const del = (name: string, path: string) => {
         buffer.push(path);
     }
     document.cookie = buffer.join('');
+    // 重置缓存
+    cacheCookies = undefined;
 }
 
 
