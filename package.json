@@ -1,5 +1,5 @@
 {
-  "name": "WebBasicJS",
+  "name": "webbasicjs",
   "version": "1.0.0",
   "description": "基于Webpack打包的前端基础库",
   "main": "dist/1.0.0/index.js",

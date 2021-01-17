@@ -4,7 +4,7 @@
     </head>
     <body>
         <script>
-            WebBasicJS.hash.setData({
+            webbasicjs.hash.setData({
                 x: "Hello",
                 y: [1, 2, 3],
                 z: {
@@ -12,9 +12,9 @@
                     bb: "Body"
                 }
             });
-            WebBasicJS.hash.pushOnHashChange(function(ev) {
+            webbasicjs.hash.pushOnHashChange(function(ev) {
                 console.log(ev);
-                console.log(WebBasicJS.hash.getData());
+                console.log(webbasicjs.hash.getData());
             });
         </script>
     </body>

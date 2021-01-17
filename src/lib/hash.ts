@@ -1,3 +1,6 @@
+import { splitFirstString } from "./str";
+
+
 /**
  * Object->String
  * @param obj DataHolder
@@ -25,13 +28,14 @@ export const stringify =
  */
 export const parse =
 (str: string, sep?: string, eqs?: string): object => {
-    let buffer = Object();
+    let buffer = {};
     str = str.trim();
     if (0 === str.length) return buffer;
     sep = sep || '&';
     eqs = eqs || '=';
     for (let item of str.split(sep)) {
         let kv: string[] = item.split(eqs);
+        // @ts-ignore
         buffer[kv[0]] = JSON.parse(decodeURIComponent(kv[1]));
     }
     return buffer;
@@ -58,20 +62,26 @@ export const pushOnHashChange =
     }
 };
 
+export const getHash =
+(): string => {
+    let s = window.location.hash.toString();
+    return s.substr(1, s.length - 1);
+}
+
 /**
  * 读取Hash值中?后的数据
  */
-export const getData = (): object | null => {
-    const HASH = window.location.hash;
-    const pos = HASH.indexOf('?') + 1;
-    if (0 === pos) {
-        return null;
-    } else {
-        return parse(HASH.substr(pos, HASH.length - pos));
-    }
+export const getData =
+(): object | null => {
+    const HASH = splitFirstString(getHash(), '?');
+    return parse(HASH[1]);
 };
 
+/**
+ * 设置Hash值中?后的数据
+ */
 export const setData =
 (data: object): void => {
-    window.location.hash = `?${stringify(data)}`;
+    const HASH = splitFirstString(getHash(), '?');
+    window.location.hash = `${HASH[0]}?${stringify(data)}`;
 };

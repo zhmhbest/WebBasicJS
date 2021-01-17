@@ -19,8 +19,12 @@ export interface onHashChangeCallback {
  * Catch HashChange
  */
 export declare const pushOnHashChange: (fn: onHashChangeCallback) => void;
+export declare const getHash: () => string;
 /**
  * 读取Hash值中?后的数据
  */
 export declare const getData: () => object | null;
+/**
+ * 设置Hash值中?后的数据
+ */
 export declare const setData: (data: object) => void;

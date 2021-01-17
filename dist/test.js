@@ -1,2 +1,2 @@
-const { WebBasicJS } = require("./1.0.0/index");
-console.log(WebBasicJS);
+const webbasicjs = require("./1.0.0/index");
+console.log(webbasicjs);

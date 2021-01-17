@@ -23,7 +23,7 @@ module.exports = function (argv) {
             path: FileSupport.subdir(dist),
             filename: isProd ? "[name].js" : "[name].dev.js",
             libraryTarget: isProd ? "commonjs" : "var",
-            library: packageInfo.name,
+            library: isProd ? undefined : packageInfo.name,
             globalObject: "this",
         }
     });
