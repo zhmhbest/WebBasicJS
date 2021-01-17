@@ -17,5 +17,46 @@
                 console.log(webbasicjs.hash.getData());
             });
         </script>
+
+        <script>
+            webbasicjs.screen.pushOnScreenResize(function(ev) {
+                console.log(webbasicjs.screen.getClientRect());
+            });
+        </script>
+
+        <script>
+            let t = webbasicjs.date.format();
+            webbasicjs.cookie.set("my-cookie", {"Harry": t});
+            console.log(webbasicjs.cookie.get("my-cookie"));
+            webbasicjs.cookie.del("my-cookie");
+        </script>
+
+        <script>
+            // webbasicjs.ajax.Requester();
+            webbasicjs.ajax.get("./test.js", "text", {
+                aa: "AA"
+            }, {
+                bb: "BB"
+            }).then(res => {
+                console.log(res);
+            });
+
+            webbasicjs.ajax.post("./test.js", "text", {
+                aa: "AA"
+            }, {
+                bb: "BB"
+            }).then(res => {
+                console.log(res);
+            });
+
+            let req = new webbasicjs.ajax.Requester("./test", {a1: "A"}, {b1: "B"});
+            req.get(".js", undefined, {
+                a2: "AA"
+            }, {
+                b2: "BB"
+            }).then(res => {
+                console.log(res);
+            });
+        </script>
     </body>
 </html>

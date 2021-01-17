@@ -38,7 +38,12 @@ export const parse =
         Object.defineProperty(
             buffer,
             kv[0],
-            JSON.parse(decodeURIComponent(kv[1]))
+            {
+                // enumerable: false,
+                // configurable: false,
+                // writable: false,
+                value: JSON.parse(decodeURIComponent(kv[1]))
+            }
         );
         // buffer[kv[0]] = JSON.parse(decodeURIComponent(kv[1]));
     }
