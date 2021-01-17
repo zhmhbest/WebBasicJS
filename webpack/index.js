@@ -60,6 +60,7 @@ module.exports = function (argv) {
 
                 strict: true,                   // 启用广泛的类型检查行为
                 noImplicitAny: true,            // 存在any类型的参数时报错
+                suppressImplicitAnyIndexErrors: false,
                 noImplicitThis: true,           // 存在不明确的this时报错
                 strictFunctionTypes: true,      // 严格的函数指针检查
 

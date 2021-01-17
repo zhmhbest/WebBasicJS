@@ -7,6 +7,7 @@ import * as arr from "./lib/arr";
 import * as ajax from "./lib/ajax";
 import * as date from "./lib/date";
 import * as cookie from "./lib/cookie";
+import * as form from "./lib/form";
 
 export {
     screen,
@@ -15,9 +16,8 @@ export {
     arr,
     ajax,
     date,
-    cookie
+    cookie,
+    form
 }
 
-// form: require("./lib/form.ts"),
-// cookie: require("./lib/cookie"),
 // file: require("./lib/file"),

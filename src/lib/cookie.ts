@@ -75,7 +75,7 @@ export const del = (name: string, path: string) => {
 }
 
 
-let cacheCookies: undefined | Object = undefined;
+let cacheCookies: undefined | object = undefined;
 /**
  * 加载Cookie
  */
