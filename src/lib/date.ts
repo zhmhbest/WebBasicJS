@@ -1,16 +1,17 @@
 /**
  * 日期格式化
- * @param {Date|string} [toFormat]
- * @param {string} [formatType]
- * @returns {string}
+ * @param toFormat
+ * @param formatType
  */
-const formatDate = (toFormat, formatType) => {
-    if (undefined===toFormat)
+export const format =
+(toFormat? : Date | string | number, formatType?: string) => {
+    if (undefined === toFormat)
         toFormat = new Date();
     else
         toFormat = (toFormat instanceof Date) ? toFormat : new Date(toFormat);
-    formatType = formatType || 'y-M-d h:m:s';
-    const buf = [];
+    formatType = formatType || 'y-M-d h:m:s S';
+
+    const buf: Array<string | number> = [];
     for(let i=0; i<formatType.length; i++) {
         let ch = formatType.substr(i, 1);
         switch(ch) {
@@ -25,20 +26,4 @@ const formatDate = (toFormat, formatType) => {
         }
     }
     return buf.join('');
-};
-
-
-/**
- * 时间戳
- * @param {Date|string} d
- * @returns {Number}
- */
-const timestamp = (d) => {
-    return new Date(d).getTime();
-};
-
-
-module.exports = {
-    format: formatDate,
-    timestamp
 };

@@ -1,15 +1,22 @@
-// @ts-ignore
-import hash = require("./hash.ts");
+import * as hash from "./hash";
 
 
-const requestBase = (
+interface onStateChangeCallback {
+    (state: number, request: XMLHttpRequest, ev: Event): void
+}
+const requestBase =
+(
     method: string,
     url: string,
     body: BodyInit | null,
-    readyCallback: (readyState: number, request: XMLHttpRequest) => any
+    readyCallback: onStateChangeCallback
 ) => {
-    const request: XMLHttpRequest = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-    request.onreadystatechange = function (ev: Event) {
+    const request: XMLHttpRequest =
+        window.XMLHttpRequest ?
+            new XMLHttpRequest() :
+            new ActiveXObject("Microsoft.XMLHTTP")
+        ;
+    request.onreadystatechange = function (this: XMLHttpRequest, ev: Event) {
         /*readyState
             0 === XMLHttpRequest.UNSENT
             1 === XMLHttpRequest.OPENED
@@ -17,36 +24,36 @@ const requestBase = (
             3 === XMLHttpRequest.LOADING
             4 === XMLHttpRequest.DONE
         */
-        readyCallback(this.readyState, this)
+        readyCallback(this.readyState, this, ev);
     };
     request.open(method, url);
     request.send(body);
 };
-
-
 const requestCommon = (
     method: string,
     url: string,
-    type: XMLHttpRequestResponseType,
-    body: BodyInit | null,
-    headers: object | null
+    type?: XMLHttpRequestResponseType | undefined,
+    body?: BodyInit | undefined | null,
+    headers?: object | undefined | null
 ): Promise<any> => {
     return new Promise((resolve: any, reject) => {
-        // <Promise>
-        // ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-        requestBase(method, url, body, (readyState, request) => {
-            switch (readyState) {
+        requestBase(method, url, (undefined === body ? null : body), (state, request, ev) => {
+            switch (state) {
                 case XMLHttpRequest.OPENED:
                     // 设置接受值
                     request.responseType = type || 'text';
                     // 设置请求头
-                    if (undefined===headers || null===headers) return;
-                    for (let key of Object.keys(headers))
+                    if (undefined === headers || null === headers) break;
+                    for (let key of Object.keys(headers)) {
                         // @ts-ignore
                         request.setRequestHeader(key, headers[key]);
-                        break;
+                    }
+                    break;
                 case XMLHttpRequest.DONE:
-                    if (request.status >= 200 && request.status < 300 || 304 === request.status /* ReadCache */ ) {
+                    if (
+                        request.status >= 200 && request.status < 300 ||
+                        304 === request.status /* ReadCache */
+                    ) {
                         // request.response
                         // request.getAllResponseHeaders()
                         resolve(request.response);
@@ -56,30 +63,27 @@ const requestCommon = (
                     break;
             }
         });
-        // ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-        // </Promise>
     });
 };
 
 
-const get = (
+export const get = (
     url: string,
-    type: XMLHttpRequestResponseType,
-    data: object,
-    headers: object
+    type?: XMLHttpRequestResponseType,
+    data?: object,
+    headers?: object
 ) => {
     if (undefined !== data && null !== data) {
-        url = `${url}?${hash.toGetString(data)}`;
+        url = `${url}?${hash.stringify(data)}`;
     }
     return requestCommon("GET", url, type, null, headers);
 };
 
-
-const post = (
+export const post = (
     url: string,
-    type: XMLHttpRequestResponseType,
-    data: object | FormData,
-    headers: object
+    type?: XMLHttpRequestResponseType,
+    data?: object | FormData,
+    headers?: object
 ) => {
     let form = null;
     if (undefined !== data && null !== data) {
@@ -96,8 +100,7 @@ const post = (
     return requestCommon("POST", url, type, form, headers);
 };
 
-
-class Requester {
+export class Requester {
     get prefix(): string {
         return this._prefix;
     }
@@ -119,13 +122,18 @@ class Requester {
     private _prefix: string;
     private _data: object;
     private _headers: object;
-    constructor(prefix: string, data: object, headers: object) {
-        this._prefix = (undefined===prefix || null===prefix) ? "" : prefix;
-        this._data = (undefined===data || null===data) ? {} : data;
-        this._headers = (undefined===headers || null===headers) ? {} : headers;
+    constructor(prefix?: string | null, data?: object | null, headers?: object | null) {
+        this._prefix = (undefined === prefix || null === prefix) ? "" : prefix;
+        this._data = (undefined === data || null === data) ? {} : data;
+        this._headers = (undefined === headers || null === headers) ? {} : headers;
     }
 
-    get(url: string, type: XMLHttpRequestResponseType, data: object, headers: object) {
+    get(
+        url: string,
+        type?: XMLHttpRequestResponseType,
+        data?: object | null,
+        headers?: object | null
+    ) {
         data = data || {};
         headers = headers || {};
         return get(
@@ -135,7 +143,13 @@ class Requester {
             {...this._headers, ...headers}
         );
     }
-    post(url: string, type: XMLHttpRequestResponseType, data: object, headers: object) {
+
+    post(
+        url: string,
+        type?: XMLHttpRequestResponseType,
+        data?: object | null,
+        headers?: object | null
+    ) {
         data = data || {};
         headers = headers || {};
         return post(
@@ -146,23 +160,16 @@ class Requester {
         );
     }
 
-    getJson(url: string, data: object, headers: object) {
+    getJson(url: string, data?: object, headers?: object) {
         return get(url, "json", data, headers);
     }
-    postJson(url: string, data: object, headers: object) {
+    postJson(url: string, data?: object, headers?: object) {
         return post(url, "json", data, headers);
     }
-    getBlob(url: string, data: object, headers: object) {
+    getBlob(url: string, data?: object, headers?: object) {
         return get(url, "blob", data, headers);
     }
-    postBlob(url: string, data: object, headers: object) {
+    postBlob(url: string, data?: object, headers?: object) {
         return post(url, "blob", data, headers);
     }
-}
-
-
-export {
-    get,
-    post,
-    Requester
 };
