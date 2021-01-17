@@ -2,7 +2,17 @@
 
 基于Webpack打包的前端基础库
 
-## 创建项目
+## 使用
+
+```html
+<script src="https://zhmhbest.github.io/WebBasicJS/dist/1.0.0/index.min.js"></script>
+```
+
+```bash
+npm -S i https://github.com/zhmhbest/WebBasicJS
+```
+
+## 创建
 
 ```bash
 npm init -f
