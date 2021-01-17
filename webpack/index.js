@@ -3,15 +3,20 @@ const FileSupport = require("./lib/FileSupport");
 
 module.exports = function (argv) {
     const packageInfo = require("../package.json");
-    const dist = `dist/${packageInfo.version}`;
+    //
     const mode = argv["mode"];
     const isProd = "production" === mode;
     const isDev = !isProd;
-    let config = new WebpackConfigEnhance();
+    //
+    const isGlobal = !!parseInt(argv["global"]);
+    //
+    const dist = `dist/${packageInfo.version}`;
 
     /**
      * 当前工作目录为package.json所在目录
      */
+    let config = new WebpackConfigEnhance();
+
     // 【Base】
     config.extend({
         devtool: "source-map",
@@ -21,9 +26,11 @@ module.exports = function (argv) {
         },
         output: {
             path: FileSupport.subdir(dist),
-            filename: isProd ? "[name].js" : "[name].dev.js",
-            libraryTarget: isProd ? "commonjs" : "var",
-            library: isProd ? undefined : packageInfo.name,
+            filename: (
+                isDev ? "[name].dev.js" : (isGlobal ? "[name].min.js" : "[name].js")
+            ),
+            libraryTarget: isGlobal ? "var" : "commonjs",
+            library: isGlobal ? packageInfo.name : undefined,
             globalObject: "this",
         }
     });

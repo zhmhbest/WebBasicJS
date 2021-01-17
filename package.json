@@ -5,8 +5,9 @@
   "main": "dist/1.0.0/index.js",
   "types": "dist/1.0.0/index.d.ts",
   "scripts": {
-    "build.dev": "webpack  --config webpack/index.js --mode=development --env mode=development",
-    "build.prod": "webpack --config webpack/index.js --mode=production  --env mode=production"
+    "build.dev": "webpack  --config webpack/index.js --mode=development --env mode=development global=1",
+    "build.mod": "webpack --config webpack/index.js --mode=production  --env mode=production global=0",
+    "build.pro": "webpack --config webpack/index.js --mode=production  --env mode=production global=1"
   },
   "repository": {
     "type": "git",
