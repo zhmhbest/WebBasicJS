@@ -35,8 +35,12 @@ export const parse =
     eqs = eqs || '=';
     for (let item of str.split(sep)) {
         let kv: string[] = item.split(eqs);
-        // @ts-ignore
-        buffer[kv[0]] = JSON.parse(decodeURIComponent(kv[1]));
+        Object.defineProperty(
+            buffer,
+            kv[0],
+            JSON.parse(decodeURIComponent(kv[1]))
+        );
+        // buffer[kv[0]] = JSON.parse(decodeURIComponent(kv[1]));
     }
     return buffer;
 };

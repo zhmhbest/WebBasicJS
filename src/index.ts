@@ -6,6 +6,7 @@ import * as str from "./lib/str";
 import * as arr from "./lib/arr";
 import * as ajax from "./lib/ajax";
 import * as date from "./lib/date";
+import * as cookie from "./lib/cookie";
 
 export {
     screen,
@@ -13,7 +14,8 @@ export {
     str,
     arr,
     ajax,
-    date
+    date,
+    cookie
 }
 
 // form: require("./lib/form.ts"),
