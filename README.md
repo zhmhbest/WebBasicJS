@@ -4,12 +4,20 @@
 
 ## 使用
 
+### Html
+
 ```html
 <script src="https://zhmhbest.github.io/WebBasicJS/dist/1.0.0/index.min.js"></script>
 ```
 
+### Module
+
 ```bash
 npm -S i https://github.com/zhmhbest/WebBasicJS
+```
+
+```js
+const WebBasicJS = require("zhmh-webbasicjs");
 ```
 
 ## 创建
