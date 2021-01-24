@@ -6,7 +6,7 @@
   "types": "dist/1.0.0/index.d.ts",
   "unpack": "dist/1.0.0/index.min.js",
   "scripts": {
-    "dev": "cross-env mode=0 global=1 webpack-dev-server --inline --progress",
+    "dev": "cross-env mode=0 global=1 webpack-dev-server --config webpack/index.js --inline --progress",
     "build.mod": "cross-env mode=1 global=0 webpack --config webpack/index.js",
     "build.pro": "cross-env mode=1 global=1 webpack --config webpack/index.js"
   },

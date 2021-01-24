@@ -7,16 +7,15 @@ module.exports = function() {
     state.packageInfo = require("../package.json");
     state.packageName = state.packageInfo.name.replace(/-/g, "_");
     state.outputPath = `dist/${state.packageInfo.version}`;
-
+    //
     state.isProd = !!parseInt(argv["mode"]);
     state.isDev = !state.isProd;
     state.mode = state.isProd ? "production" : "development";
     state.isGlobal = !!parseInt(argv["global"]);
-
+    //
     state.devPort = 9000;
     state.devPath = "test";
     state.devHtml = `${state.devPath}/index.html`;
-
     // console.log(state);
 
 

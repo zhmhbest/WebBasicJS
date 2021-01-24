@@ -9,7 +9,7 @@ export const format =
         toFormat = new Date();
     else
         toFormat = (toFormat instanceof Date) ? toFormat : new Date(toFormat);
-    formatType = formatType || 'y-M-d h:m:s S';
+    formatType = formatType || 'y-M-d h:m:s';
 
     const buf: Array<string | number> = [];
     for(let i=0; i<formatType.length; i++) {
