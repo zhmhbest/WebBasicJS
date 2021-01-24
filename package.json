@@ -6,9 +6,9 @@
   "types": "dist/1.0.0/index.d.ts",
   "unpack": "dist/1.0.0/index.min.js",
   "scripts": {
-    "build.dev": "webpack  --config webpack/index.js --mode=development --env mode=development global=1",
-    "build.mod": "webpack --config webpack/index.js --mode=production  --env mode=production global=0",
-    "build.pro": "webpack --config webpack/index.js --mode=production  --env mode=production global=1"
+    "build.dev": "webpack  --config webpack/index.js --mode=development --env mode=0 global=1",
+    "build.mod": "webpack --config webpack/index.js --mode=production  --env mode=1 global=0",
+    "build.pro": "webpack --config webpack/index.js --mode=production  --env mode=1 global=1"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,5 @@
     "webpack": "^4.46.0",
     "webpack-cli": "^4.3.1"
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.12.1"
-  }
+  "dependencies": {}
 }
