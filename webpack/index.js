@@ -1,17 +1,23 @@
 const WebpackConfigEnhance = require("./lib/WebpackConfig");
 const FileSupport = require("./lib/FileSupport");
 
-module.exports = function (argv) {
+module.exports = function() {
+    const argv = process.env;
     let state = {};
     state.packageInfo = require("../package.json");
-    state.packageName = state.packageInfo.name;
+    state.packageName = state.packageInfo.name.replace(/-/g, "_");
     state.outputPath = `dist/${state.packageInfo.version}`;
 
     state.isProd = !!parseInt(argv["mode"]);
     state.isDev = !state.isProd;
     state.mode = state.isProd ? "production" : "development";
-
     state.isGlobal = !!parseInt(argv["global"]);
+
+    state.devPort = 9000;
+    state.devPath = "test";
+    state.devHtml = `${state.devPath}/index.html`;
+
+    // console.log(state);
 
 
     /**
@@ -35,9 +41,29 @@ module.exports = function (argv) {
         }
     });
 
-    // 【Loader】
+    if (state.isDev) {
+        const HtmlWebpackPlugin = require('html-webpack-plugin');
+        config.extend({
+            devServer: {
+                port: state.devPort,
+                progress: true,
+                contentBase: FileSupport.subdir(state.devPath),
+                compress: true
+            }
+        });
+        config.addPlugin(new HtmlWebpackPlugin({
+            template: state.devHtml, // 模板HTML文件路径
+            filename: "index.html",  // 打包后HTML文件名称
+            minify: {
+                removeAttributeQuotes: state.isProd, // 删除多余的双引号
+                collapseWhitespace: state.isProd, // 删除换行
+                hash: state.isDev
+            }
+        }));
+    }
+
     require("./loader.js")(state, config);
 
-    // console.log(config.configuration);
+    console.log(config.configuration);
     return config.configuration;
 };

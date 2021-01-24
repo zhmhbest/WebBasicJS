@@ -16,11 +16,18 @@ npm -S i https://github.com/zhmhbest/WebBasicJS
 
 ```bash
 npm init -f
-npm -D i webpack@4 webpack-cli@4
+npm -D i cross-env
+
+# for src
+npm -D i webpack@4 webpack-cli@3
 npm -D i babel-loader @babel/core @babel/preset-env
 npm -D i @babel/plugin-proposal-class-properties
 npm -D i @babel/plugin-proposal-object-rest-spread
 npm -D i @babel/plugin-proposal-decorators
 # npm -S i @babel/polyfill
 npm -D i typescript ts-loader
+
+# for test
+npm -D i webpack-dev-server@3
+npm -D i html-webpack-plugin@4
 ```
