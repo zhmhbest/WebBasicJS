@@ -20,7 +20,7 @@ npm -S i https://github.com/zhmhbest/WebBasicJS
 const WebBasicJS = require("zhmh-webbasicjs");
 ```
 
-## 创建
+## 创建过程
 
 ```bash
 npm init -f
@@ -38,4 +38,5 @@ npm -D i typescript ts-loader
 # for test
 npm -D i webpack-dev-server@3
 npm -D i html-webpack-plugin@4
+npm -D i open-browser-webpack-plugin
 ```

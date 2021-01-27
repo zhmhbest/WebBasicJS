@@ -41,7 +41,6 @@ module.exports = function() {
     });
 
     if (state.isDev) {
-        const HtmlWebpackPlugin = require('html-webpack-plugin');
         config.extend({
             devServer: {
                 port: state.devPort,
@@ -50,6 +49,7 @@ module.exports = function() {
                 compress: true
             }
         });
+        const HtmlWebpackPlugin = require('html-webpack-plugin');
         config.addPlugin(new HtmlWebpackPlugin({
             template: state.devHtml, // 模板HTML文件路径
             filename: "index.html",  // 打包后HTML文件名称
@@ -58,6 +58,10 @@ module.exports = function() {
                 collapseWhitespace: state.isProd, // 删除换行
                 hash: state.isDev
             }
+        }));
+        const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+        config.addPlugin(new OpenBrowserPlugin({
+            url: `http://localhost:${state.devPort}/`
         }));
     }
 

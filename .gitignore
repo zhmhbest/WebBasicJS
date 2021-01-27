@@ -1,10 +1,9 @@
+.trash/
 /.idea/
 /.vscode/
 /node_modules/
 /yarn.lock
 /package-lock.json
+
 /.babelrc
 /tsconfig.json
-/dist/**/*.dev.js
-/dist/**/*.dev.js.map
-.trash/
